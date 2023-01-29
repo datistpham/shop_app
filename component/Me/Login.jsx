@@ -82,6 +82,9 @@ const Login = () => {
                 <Text style={{fontSize: 16, marginBottom: 8}}>Mật khẩu</Text>
                 <TextInput secureTextEntry={true} placeholder={"Nhập mật khẩu"} onFocus={handleFocus2} onBlur={handleBlur2} value={password} onChangeText={setPassword} style={{width: "100%", height: 40, borderRadius: 10, borderColor: isFocused2=== true ? "#2e89ff" : "#e7e7e7", borderStyle: "solid", borderWidth: 1, fontSize: 16, padding: 10, backgroundColor: "#fff"}} />
             </View>
+            <View style={{width: "100%", direction: "rtl", display: "flex", flexDirection: "row-reverse"}}>
+              <Text onPress={()=> navigation.push("ForgotPassword")}>Quên mật khẩu</Text>
+            </View>
         </View>
         <View style={styles.flexC}>
             <Button title={"Đăng nhập"} color={"#2e89ff"} onPress={twoOptionAlertHandler} />

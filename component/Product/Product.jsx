@@ -31,10 +31,10 @@ const Product = () => {
           </View>
           <View>
             <Text numberOfLines={1} style={{overflow: "hidden", marginBottom: 8, marginTop: 8, fontSize: 14}}>{item.product_name}</Text>
-            <Text numberOfLines={2} style={{overflow: "hidden", marginBottom: 8}}>Mô tả: {item.product_description}</Text>
+            <Text numberOfLines={2} style={{overflow: "hidden", marginBottom: 8, height: 50}}>Mô tả: {item.product_description}</Text>
           </View>
           <View>
-            <Text>Giá: {numberWithCommas(parseInt(item.price))}đ</Text>
+            <Text>Giá: {parseInt(item.discount) > 0 ? <Text><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid'}}>{numberWithCommas(parseInt(item.price))}</Text> <Text style={{color: "red"}}>{numberWithCommas(parseInt(item.price) * (1 - parseInt(item.discount) / 100))}đ</Text></Text> : numberWithCommas(parseInt(item.price)) + "đ"}</Text>
           </View>
         </View>
       </TouchableHighlight>

@@ -19,11 +19,16 @@ import _ from 'lodash';
 import History from './component/History/History';
 import Checkout from './component/Checkout/Checkout';
 import Payment from './component/Payment/Payment';
+import { LogBox } from 'react-native';
+import ForgotPassword from './component/ForgotPassword/ForgotPassword';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export const AppContext= createContext()
 export default function App() {
+  useEffect(()=> {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, [])
   const [uid, setUid]= useState("")
   const [auth, setAuth]= useState(false)
   const [listCart, setListCart]= useState([])
@@ -36,8 +41,8 @@ export default function App() {
   return (
     <AppContext.Provider value={{setUid, setAuth, uid, auth, listCart, setListCart, setChange}}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="TabApp">
-            <Stack.Screen name={"Checkout"} options={({navigation, route})=> ({
+          <Stack.Navigator initialRouteName="TabApp" screenOptions={{animation: "slide_from_right"}}>
+            <Stack.Screen name={"Checkout"} options={({navigation})=> ({
                 title: "Thanh toán",
                 headerStyle: {
                   backgroundColor: "#2e89ff"
@@ -126,6 +131,7 @@ export default function App() {
               </>
             }
             <Stack.Screen options={{headerShown: false}} name={"TabApp"} component={TabApp} />
+            <Stack.Screen options={{headerTitle: "Quên mật khẩu", headerTitleAlign: "center", headerTintColor: "#fff", headerStyle: {backgroundColor: "#2e89ff"}}} name={"ForgotPassword"} component={ForgotPassword} />
             <Stack.Screen options={{headerShown: false}} name={"History"} component={History} />
             <Stack.Screen options={({navigation, route})=> ({
               title: route.params.name,
@@ -153,11 +159,7 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: 'bold',
               },
-              headerLeft: ()=> (
-                <TouchableHighlight underlayColor={"unset"} onPress={()=> navigation.goBack(-1)}>
-                  <Icons name={"keyboard-arrow-left"} size={18} color={"#fff"} />
-                </TouchableHighlight>
-              ),
+              headerBackVisible: false,
               headerTitleAlign: "center"
             })} name={"Payment"} component={Payment} />
           </Stack.Navigator>

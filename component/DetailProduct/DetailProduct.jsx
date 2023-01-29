@@ -36,9 +36,18 @@ const DetailProduct = () => {
   }
   const order= async()=> {
     if(auth=== true ) {
-      await add_item_cart(uid, route.params.productId, amount)
-      setChange(prev=> !prev)
-      setVisible(true)
+      if(parseInt(data?.amount_product) <= 0 || (data?.amount_product) === null) {
+        alert("Sản phẩm này tạm thời hết hàng. Bạn vui lòng thử lại sau")
+      }
+      else if(parseInt(amount) > parseInt(data?.amount_product)) {
+        alert("Vượt quá số lượng sản phẩm hiện có. Bạn vui lòng thử lại ")
+
+      }
+      else {
+        await add_item_cart(uid, route.params.productId, amount)
+        setChange(prev=> !prev)
+        setVisible(true)
+      }
     }
     else {
       navigation.navigate("Login")
@@ -63,8 +72,11 @@ const DetailProduct = () => {
                 </View>
                 <View style={{paddingLeft: 10, width: "50%"}}>
                   <Text numberOfLines={2} style={{fontSize: 18, fontWeight: "600", color: "#000", overflow: "hidden", marginBottom: 8}}>{data?.product_name}</Text>
+                  <Text numberOfLines={2} style={{fontSize: 18, fontWeight: "600", color: "#000", overflow: "hidden", marginBottom: 8}}>Số lượng còn: {data?.amount_product}</Text>
                   <Text numberOfLines={2} style={{fontSize: 16, fontWeight: "600", color: "#000", overflow: "hidden", marginBottom: 8}}>Mô tả: {data?.product_name}</Text>
-                  <Text numberOfLines={2} style={{fontSize: 16, fontWeight: "600", color: "#000", overflow: "hidden", marginBottom: 8}}>Giá: {numberWithCommas(parseInt(data?.price))}đ</Text>
+                  <Text numberOfLines={2} style={{fontSize: 16, fontWeight: "600", color: "#000", overflow: "hidden", marginBottom: 8}}>Giá: 
+                    {parseInt(data?.discount) > 0 ? <Text><Text style={{textDecorationLine: 'line-through', textDecorationStyle: 'solid'}}>{numberWithCommas(parseInt(data?.price))}</Text> <Text style={{color: "red"}}>{numberWithCommas(parseInt(data?.price) * (1 - parseInt(data?.discount) / 100))}đ</Text></Text> : numberWithCommas(parseInt(data?.price)) + "đ"}
+                  </Text>
                   <View>
                     <View style={{display: "flex", alignItems: "center", flexDirection: "row"}}>
                       <TouchableHighlight onPress={substractAmount} underlayColor={"#2e89ff"}>

@@ -5,7 +5,7 @@ import { AppContext } from '../../App'
 import ChangeBank from './ChangeBank'
 import Modal from "react-native-modal";
 
-const BankProfile = (props) => {
+const BankProfile = () => {
   const [data, setData]= useState([])
   const {uid}= useContext(AppContext)
   const [openChange, setOpenChange]= useState(false)

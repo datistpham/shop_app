@@ -2,12 +2,12 @@ import { useIsFocused } from '@react-navigation/native'
 import React, { useContext, useEffect, useState } from 'react'
 import { FlatList, SafeAreaView, ScrollView, View, Text, Image, ActivityIndicator } from 'react-native'
 import get_order_pending from '../../api/get_order_pending'
-// import { AppContext } from '../../App'
+import { AppContext } from '../../App'
 import uuid from 'react-native-uuid';
 import numberWithCommas from '../utils/numberWithComma';
 const Pending = () => {
-  const uid= "8cd31eff-9098-42bc-99df-d11d8ff4e779"
-  // const {uid}= useContext(AppContext)
+  
+  const {uid}= useContext(AppContext)
   const [data, setData]= useState([])
   useEffect(()=> {
       get_order_pending(uid, setData)
@@ -19,7 +19,7 @@ const Pending = () => {
       }
       {
         data.length > 0 && 
-        <FlatList data={data} keyExtractor={(item, index) => String(index)} renderItem={({item, index, separators})=> <ComponentItem keyExtractor={(item, index) => String(index)} key={index} {...item} />} />
+        <FlatList data={data.reverse()} keyExtractor={(item, index) => String(index)} renderItem={({item, index, separators})=> <ComponentItem keyExtractor={(item, index) => String(index)} key={index} {...item} />} />
       }
     </View>
   )
@@ -33,6 +33,9 @@ const ComponentItem= (props)=> {
         <Text style={{marginBottom: 8}}>Địa chỉ nhận hàng <Text style={{fontSize: 18, fontWeight: "600"}}>{props?.address}</Text></Text>
         <Text style={{marginBottom: 8}}>Email: <Text style={{fontSize: 18, fontWeight: "600"}}>{props?.email}</Text></Text>
         <Text style={{marginBottom: 8}}>Số điện thoại <Text style={{fontSize: 18, fontWeight: "600"}}>{props?.phone_number}</Text></Text>
+        <Text style={{marginBottom: 8}}>Ghi chú của người nhận <Text style={{fontSize: 18, fontWeight: "600"}}>{props?.note}</Text></Text>
+        <Text style={{marginBottom: 8}}>Phương thức thanh toán <Text style={{fontSize: 18, fontWeight: "600"}}>{props?.method_name || "_"}</Text></Text>
+        
         <Text style={{marginBottom: 8}}>Sản phẩm đã đặt</Text>
         <View style={{display: "flex", flexDirection: "row"}}>
           <Image style={{width: 130, aspectRatio: 1 / 1, borderRadius: 10}} source={{uri: props?.image1}} />

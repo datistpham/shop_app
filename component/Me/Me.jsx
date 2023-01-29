@@ -9,6 +9,7 @@ const Me = () => {
   const {auth}= useContext(AppContext)
 
   return (
+    
     <View style={{flex: 1}}>
         {
             auth=== false && <View style={[styles.container, {marginTop: 40}]}>

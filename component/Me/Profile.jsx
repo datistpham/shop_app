@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, Button, Text, TouchableHighlight, View } from 'react-native'
+import { ActivityIndicator, Button, ScrollView, Text, TouchableHighlight, View } from 'react-native'
 import get_user_profile from '../../api/get_user_profile'
 import Modal from "react-native-modal";
 import ChangeProfile from './ChangeProfile';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { AppContext } from '../../App';
 import BankProfile from './BankProfile';
+import MomoProfile from './MomoProfile';
+import Icons from "react-native-vector-icons/MaterialIcons"
 
 const Profile = () => {
+  const route= useRoute()
   const navigation= useNavigation()
   const [data, setData]= useState()
   const [openChange, setOpenChange]= useState(false)
@@ -17,15 +20,23 @@ const Profile = () => {
     get_user_profile(uid, setData)
   }, [])
   return (
-    <View style={{marginTop: 40, padding: 10}}>
+    <ScrollView>
+        <View style={{marginTop: 40, padding: 10}}>
         {
             !data && <ActivityIndicator size={"large"} color={"#2e89ff"} />
         }
         {
             data && <View>
-            <Text style={{marginTop: 12, fontSize: 18, fontWeight: "600", marginBottom: 12, textAlign: "center"}}>
-                Thông tin của bạn
-            </Text>
+            <View style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row"}}>
+                {
+                    route.params?.backButton=== true ? <Icons onPress={()=> navigation.navigate("Checkout")} name={"arrow-back"} size={20} /> : <Text style={{opacity: 0}}>aaa</Text>
+                }
+                <Text style={{marginTop: 12, fontSize: 18, fontWeight: "600", marginBottom: 12, textAlign: "center"}}>
+                    Thông tin của bạn
+                </Text>
+                <Text style={{opacity: 0}}>aaa</Text>
+
+            </View>
             <View style={{padding: 10, borderRadius: 10, backgroundColor: "#fff"}}>
                 <View style={{display: "flex", alignItems: 'center', flexDirection: "row", marginBottom: 24}}>
                     <View style={{width: 200}}>
@@ -62,7 +73,7 @@ const Profile = () => {
             </View>
             
             <BankProfile />
-
+            <MomoProfile />
             <TouchableHighlight underlayColor={"unset"} style={{borderRadius: 10}} onPress={()=> navigation.navigate("History", {id_user: uid})}>
                 <View style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row", width: "100%", padding: 10, borderRadius: 10, backgroundColor: "#fff", marginTop: 12}}>
                     <Text>Đơn mua</Text>
@@ -86,6 +97,7 @@ const Profile = () => {
         </View>
         }
     </View>
+    </ScrollView>
   )
 }
 
