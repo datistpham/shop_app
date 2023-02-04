@@ -53,7 +53,7 @@ const Payment = () => {
                 <Text style={{marginLeft: 12}}>{item.product_name}</Text>
               </View>
               <View>
-                <Text>{numberWithCommas(parseInt(item?.amount) * parseInt(item?.price))}đ</Text>
+                <Text>{parseInt(item?.discount) > 0 ? <Text><Text style={{color: "red"}}>{numberWithCommas(parseInt(item?.price) * (1 - parseInt(item?.discount) / 100))}đ</Text></Text> : numberWithCommas(parseInt(item?.price)) + "đ"}</Text>
               </View>
             </View>} />
             </ScrollView>
@@ -65,7 +65,14 @@ const Payment = () => {
             <Text style={{fontSize: 18, marginBottom: 12, marginTop: 12}}>Tổng tiền</Text>
             <View style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row", marginBottom: 8}}>
               <Text>Tạm tính</Text>
-              <Text>{numberWithCommas(_.sumBy(data.items, function(e) {return parseInt(e?.amount) * parseInt(e?.price)}))}đ</Text>
+              <Text>{numberWithCommas(_.sumBy(data.items, function(e) {
+                if(parseInt(e?.discount) > 0) {
+                  return parseInt(e?.amount) * parseInt(e?.price) * (1 - parseInt(e?.discount) / 100)
+                }
+                else {
+                  return parseInt(e?.amount) * parseInt(e?.price)
+                }
+              }))}đ</Text>
             </View>
             <View style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row", marginBottom: 8}}>
               <Text>Phí vận chuyển</Text>
@@ -73,7 +80,14 @@ const Payment = () => {
             </View>
             <View style={{display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "row", marginBottom: 8}}>
               <Text>Tổng cộng</Text>
-              <Text>{numberWithCommas(_.sumBy(data.items, function(e) {return parseInt(e?.amount) * parseInt(e?.price)}) + parseInt(50000))}đ</Text>
+              <Text>{numberWithCommas(_.sumBy(data.items, function(e) {
+                if(parseInt(e?.discount) > 0) {
+                  return parseInt(e?.amount) * parseInt(e?.price) * (1 - parseInt(e?.discount) / 100)
+                }
+                else {
+                  return parseInt(e?.amount) * parseInt(e?.price)
+                }
+              }) + parseInt(50000))}đ</Text>
             </View>
           </View>
         </View>

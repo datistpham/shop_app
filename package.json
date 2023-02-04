@@ -2,7 +2,7 @@
   "name": "shop_app",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web"
@@ -19,6 +19,7 @@
     "expo": "~47.0.6",
     "expo-dev-client": "~2.0.1",
     "expo-linking": "^3.3.0",
+    "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "fuse.js": "^6.6.2",
     "lodash": "^4.17.21",
@@ -42,7 +43,7 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.10",
     "react-navigation": "^4.4.4",
-    "expo-splash-screen": "~0.17.5"
+    "sharp-cli": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
