@@ -88,6 +88,7 @@ const Checkout = () => {
       });
       const resultMomo = await resMomo.data;
       Linking.openURL(resultMomo.payUrl);
+      
       let id_payment = uuid.v4();
       try {
         const res = await axios({
@@ -299,6 +300,8 @@ const Checkout = () => {
               title={"Chọn phương thức thanh toán"}
               onPress={() => {
                 if (
+                  userName.length<= 6 ||
+                  address.length<= 20 ||
                   userName.length <= 0 ||
                   phoneNumber.length <= 0 ||
                   email.length <= 0 ||
